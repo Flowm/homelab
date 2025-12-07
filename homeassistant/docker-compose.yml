@@ -1,6 +1,6 @@
 services:
   homeassistant:
-    image: homeassistant/home-assistant:2025.10
+    image: homeassistant/home-assistant:2025.12
     restart: unless-stopped
     environment:
       - PGID=1000
@@ -31,7 +31,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
 
   grafana:
-    image: grafana/grafana:12.2
+    image: grafana/grafana:12.3
     restart: unless-stopped
     environment:
       - DATABASE_USER=${DATABASE_USER}
