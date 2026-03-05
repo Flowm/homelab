@@ -1,0 +1,14 @@
+services:
+  lgsm-pw:
+    image: gameservermanagers/gameserver:pw
+    restart: unless-stopped
+    volumes:
+      - ./games/pw:/data
+    network_mode: host
+
+  lgsm-fctr:
+    image: gameservermanagers/gameserver:fctr
+    restart: unless-stopped
+    volumes:
+      - ./games/fctr:/data
+    network_mode: host
