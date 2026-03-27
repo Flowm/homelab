@@ -1,6 +1,6 @@
 services:
   teslamate:
-    image: teslamate/teslamate:latest
+    image: teslamate/teslamate:3.0@sha256:6569026b73bd657455bbec05965d07fa30b6d4d70eaab0bd5b343231c0429167
     restart: unless-stopped
     environment:
       - DATABASE_USER=${DATABASE_USER}
@@ -17,17 +17,17 @@ services:
       - all
 
   database:
-    image: postgres:17
+    image: postgres:18@sha256:a9abf4275f9e99bff8e6aed712b3b7dfec9cac1341bba01c1ffdfce9ff9fc34a
     restart: unless-stopped
     environment:
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_PASS}
       - POSTGRES_DB=${DATABASE_NAME}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
   grafana:
-    image: teslamate/grafana:latest
+    image: teslamate/grafana:3.0@sha256:e02d1f036dd10771ea04db2bafc483067a9dbb874d0b5137dda5a6fe539b77dc
     restart: unless-stopped
     environment:
       - DATABASE_USER=${DATABASE_USER}
@@ -42,7 +42,7 @@ services:
       - ./Teslamate-CustomGrafanaDashboards/dashboards:/TeslamateCustomDashboards
 
   mosquitto:
-    image: eclipse-mosquitto:2
+    image: eclipse-mosquitto:2@sha256:9cfdd46ad59f3e3e5f592f6baf57ab23e1ad00605509d0f5c1e9b179c5314d87
     restart: unless-stopped
     command: mosquitto -c /mosquitto-no-auth.conf
     ports:
@@ -52,7 +52,7 @@ services:
       - mosquitto_data:/mosquitto/data
 
   abrp:
-    image: fetzu/teslamate-abrp:latest
+    image: fetzu/teslamate-abrp:3.4.0@sha256:ec07409508be4683cb464c54d5e8884558e9eed09924cdf036fa2c1d49bb8f9d
     init: true
     restart: unless-stopped
     environment:
