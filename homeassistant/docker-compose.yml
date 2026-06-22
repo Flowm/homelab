@@ -1,6 +1,6 @@
 services:
   homeassistant:
-    image: homeassistant/home-assistant:2026.3@sha256:916682086154a7390114a9788782b8efb199852d4f7d47066722c2bc5d1829e6
+    image: homeassistant/home-assistant:2026.6@sha256:adb3341e31e03e0048e60d8c1cf952e118a381ae258bb921d3da12a3b27bf0c2
     restart: unless-stopped
     environment:
       - PGID=1000
@@ -16,7 +16,7 @@ services:
         restart: true
 
   database:
-    image: timescale/timescaledb-ha:pg18-ts2.26@sha256:b441ec1bd8a513473c0695e910565fa01ce039dcda05a860a177fb0faf7b85ac
+    image: timescale/timescaledb-ha:pg18-ts2.28@sha256:5942884232a38a3449c581a44ca1620abcfc8c113e7ab7def9acfd95015aaee6
     restart: unless-stopped
     environment:
       - POSTGRES_USER=${DATABASE_USER}
@@ -31,7 +31,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
 
   grafana:
-    image: grafana/grafana:12.4@sha256:83749231c3835e390a3144e5e940203e42b9589761f20ef3169c716e734ad505
+    image: grafana/grafana:13.0@sha256:5dad0df181cb644a14e13617b913b261a54f7d4fd4510721dba420929f35bea2
     restart: unless-stopped
     environment:
       - DATABASE_USER=${DATABASE_USER}
