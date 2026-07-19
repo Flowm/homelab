@@ -1,0 +1,41 @@
+{
+	admin off
+
+	log access_stdout {
+		output stdout
+		include http.log.access
+	}
+}
+
+(default) {
+	log {
+		output file /var/log/caddy/access.log
+	}
+
+	encode zstd gzip
+	header {
+		-Server
+	}
+}
+
+home.spirit.frcy.org spirit.frcy.org {
+	import default
+	tls internal
+
+	handle_path /jellyfin/* {
+		reverse_proxy http://192.168.144.6:8096 {
+		}
+	}
+}
+
+admin.spirit.frcy.org {
+	import default
+	tls internal
+
+	reverse_proxy https://192.168.144.6:1443 {
+		transport http {
+			tls
+			tls_insecure_skip_verify
+		}
+	}
+}
