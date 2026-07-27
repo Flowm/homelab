@@ -26,6 +26,21 @@ home.spirit.frcy.org spirit.frcy.org {
 		reverse_proxy http://192.168.144.6:8096 {
 		}
 	}
+
+	handle /dozzle/* {
+		reverse_proxy http://dozzle:8080 {
+			@event_stream header Content-Type text/event-stream*
+			handle_response @event_stream {
+				header Cache-Control "no-cache, no-transform"
+				copy_response_headers {
+					exclude Cache-Control
+				}
+				copy_response
+			}
+
+			flush_interval -1
+		}
+	}
 }
 
 admin.spirit.frcy.org {

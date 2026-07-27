@@ -12,8 +12,20 @@ services:
       - caddy_config:/config
       - caddy_logs:/var/log/caddy
 
+  dozzle:
+    image: amir20/dozzle:latest
+    restart: unless-stopped
+    environment:
+      DOZZLE_BASE: /dozzle
+    volumes:
+      - dozzle_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 127.0.0.1:8080:8080
+
 volumes:
   caddy_data:
   caddy_config:
   caddy_logs:
   awstats_data:
+  dozzle_data:
