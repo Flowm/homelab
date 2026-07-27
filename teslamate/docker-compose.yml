@@ -9,12 +9,14 @@ services:
       - DATABASE_HOST=${DATABASE_HOST}
       - MQTT_HOST=${MQTT_HOST}
       - ENCRYPTION_KEY=${ENCRYPTION_KEY}
-    ports:
-      - 4000:4000
+      - URL_PATH=/teslamate
     volumes:
       - ./import:/opt/app/import
     cap_drop:
       - all
+    networks:
+      - default
+      - caddy_proxy
 
   database:
     image: postgres:18@sha256:29ee7bb30d804447dc9a91fd0d74322ae1dc3a4072cc6346f70a5ed6e783b565
@@ -34,12 +36,16 @@ services:
       - DATABASE_PASS=${DATABASE_PASS}
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_HOST=${DATABASE_HOST}
-    ports:
-      - 3000:3000
+      - GF_SERVER_DOMAIN=home.spirit.frcy.org
+      - GF_SERVER_ROOT_URL=https://home.spirit.frcy.org/teslamate/grafana/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
     volumes:
       - grafana_data:/var/lib/grafana
       - ./Teslamate-CustomGrafanaDashboards/customdashboards.yml:/etc/grafana/provisioning/dashboards/customdashboards.yml
       - ./Teslamate-CustomGrafanaDashboards/dashboards:/TeslamateCustomDashboards
+    networks:
+      - default
+      - caddy_proxy
 
   mosquitto:
     image: eclipse-mosquitto:2@sha256:6f8d8a947c506f8a2290ec65cd4bd2bc7cb4d43fb5f6271f861cb013e2ef9797
@@ -60,6 +66,10 @@ services:
       - USER_TOKEN=${USER_TOKEN}
       - CAR_NUMBER=${CAR_NUMBER}
       - CAR_MODEL=${CAR_MODEL}
+
+networks:
+  caddy_proxy:
+    external: true
 
 volumes:
   postgres_data:

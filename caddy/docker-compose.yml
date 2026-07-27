@@ -11,6 +11,8 @@ services:
       - caddy_data:/data
       - caddy_config:/config
       - caddy_logs:/var/log/caddy
+    networks:
+      - caddy_proxy
 
   dozzle:
     image: amir20/dozzle:latest
@@ -22,6 +24,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 127.0.0.1:8080:8080
+    networks:
+      - caddy_proxy
+
+networks:
+  caddy_proxy:
+    name: caddy_proxy
 
 volumes:
   caddy_data:

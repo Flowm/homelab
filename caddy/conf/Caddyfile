@@ -27,6 +27,14 @@ home.spirit.frcy.org spirit.frcy.org {
 		}
 	}
 
+	handle /teslamate/grafana/* {
+		reverse_proxy http://grafana:3000
+	}
+
+	handle /teslamate/* {
+		reverse_proxy http://teslamate:4000
+	}
+
 	handle /dozzle/* {
 		reverse_proxy http://dozzle:8080 {
 			@event_stream header Content-Type text/event-stream*
