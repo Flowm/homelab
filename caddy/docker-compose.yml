@@ -1,6 +1,6 @@
 services:
   caddy:
-    image: caddy:2.11.4-alpine
+    image: caddy:2.11.4-alpine@sha256:5f5c8640aae01df9654968d946d8f1a56c497f1dd5c5cda4cf95ab7c14d58648
     restart: unless-stopped
     ports:
       - "80:80"
@@ -15,7 +15,7 @@ services:
       - caddy_proxy
 
   dozzle:
-    image: amir20/dozzle:latest
+    image: amir20/dozzle:v10.7@sha256:068025ea622a1ce3e343a138dd9a962429b5187a133aca301bb4991fe7d2b708
     restart: unless-stopped
     environment:
       DOZZLE_BASE: /dozzle
