@@ -12,7 +12,8 @@
 		output file /var/log/caddy/access.log
 	}
 
-	encode zstd gzip
+	@encoded not path /dozzle/api/events/stream*
+	encode @encoded zstd gzip
 	header {
 		-Server
 	}
@@ -37,15 +38,6 @@ home.spirit.frcy.org spirit.frcy.org {
 
 	handle /dozzle/* {
 		reverse_proxy http://dozzle:8080 {
-			@event_stream header Content-Type text/event-stream*
-			handle_response @event_stream {
-				header Cache-Control "no-cache, no-transform"
-				copy_response_headers {
-					exclude Cache-Control
-				}
-				copy_response
-			}
-
 			flush_interval -1
 		}
 	}
