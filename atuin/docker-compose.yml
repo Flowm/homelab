@@ -1,0 +1,33 @@
+services:
+  atuin:
+    image: ghcr.io/atuinsh/atuin:18.19.0@sha256:4d0ccca1d151f860b3f469c60df78bf1ab798f15e88dc1912d31d6741653eb99
+    restart: unless-stopped
+    command: start
+    environment:
+      - ATUIN_HOST=0.0.0.0
+      - ATUIN_OPEN_REGISTRATION=${ATUIN_OPEN_REGISTRATION}
+      - ATUIN_DB_URI=postgres://${DATABASE_USER}:${DATABASE_PASS}@${DATABASE_HOST}/${DATABASE_NAME}
+      - RUST_LOG=info,atuin_server=debug
+    ports:
+      - 8888:8888
+    volumes:
+      - ./config:/config
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+
+  database:
+    image: postgres:18@sha256:06cad38a5d9f5d24b4d83d86def30795d5e4b757fedbf5281172b576dedcd941
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASS}
+      - POSTGRES_DB=${DATABASE_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
+
+volumes:
+  postgres_data:
