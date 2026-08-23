@@ -36,6 +36,11 @@ home.spirit.frcy.org spirit.frcy.org {
 		reverse_proxy http://teslamate:4000
 	}
 
+	redir /atuin /atuin/
+	handle /atuin/* {
+		reverse_proxy http://atuin:8888
+	}
+
 	handle /dozzle/* {
 		reverse_proxy http://dozzle:8080 {
 			flush_interval -1
