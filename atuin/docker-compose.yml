@@ -1,6 +1,6 @@
 services:
   atuin:
-    image: ghcr.io/atuinsh/atuin:18.23.0@sha256:f232feeead54a0a13132b9cd477e312c3380e9dc90f1db24c4f79ce6c8e034ea
+    image: ghcr.io/atuinsh/atuin:18.24.8@sha256:2bc3a558b236283cd64ce64cf9aa463c24e34f97fc36a4b1a5b2b1853a5dcb49
     restart: unless-stopped
     command: start
     environment:
@@ -20,7 +20,7 @@ services:
       - caddy_proxy
 
   database:
-    image: postgres:18@sha256:5a5a84b19854a9ffaa54082c166ff4ec27473a361e496e5ea167f298f2da9722
+    image: postgres:18@sha256:2ea8630df176ad090ec92136dee850397c5af8781e4bcf2e4162593691c61bbc
     restart: unless-stopped
     environment:
       - POSTGRES_USER=${DATABASE_USER}
