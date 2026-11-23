@@ -1,6 +1,6 @@
 services:
   teslamate:
-    image: teslamate/teslamate:4.2.0@sha256:88f4b0eb20802e4dd8518b31045d2c19ce384bd5c85ae7289a921f5221ea2562
+    image: teslamate/teslamate:4.5.0@sha256:a285b02171a789cf2af5075502d2ec9034b58a42db777a30ae86aef2d0c12af4
     restart: unless-stopped
     environment:
       - DATABASE_USER=${DATABASE_USER}
@@ -29,7 +29,7 @@ services:
       - postgres_data:/var/lib/postgresql
 
   grafana:
-    image: teslamate/grafana:4.2.0@sha256:4e6fe5ded7d614bf22d0297f9565ff00d8db36d18c73395a06bc040a1ffa05af
+    image: teslamate/grafana:4.5.0@sha256:598c65f4fbefaccc213d16fde5b86b5e71366bd391c00b28ff64b976e0841dde
     restart: unless-stopped
     environment:
       - DATABASE_USER=${DATABASE_USER}
@@ -48,7 +48,7 @@ services:
       - caddy_proxy
 
   mosquitto:
-    image: eclipse-mosquitto:2@sha256:6f8d8a947c506f8a2290ec65cd4bd2bc7cb4d43fb5f6271f861cb013e2ef9797
+    image: eclipse-mosquitto:2@sha256:fa12172a051310efe5bcb7a6a11b77bd5faacb82cbacd7742aa758bf024fd8e4
     restart: unless-stopped
     command: mosquitto -c /mosquitto-no-auth.conf
     ports:
@@ -58,7 +58,7 @@ services:
       - mosquitto_data:/mosquitto/data
 
   abrp:
-    image: fetzu/teslamate-abrp:4.0.0@sha256:3e3333f4ce69091e1540d1cfec27636d47b25ab7083ccb219ec1ba5d0b1cf44c
+    image: fetzu/teslamate-abrp:4.0.2@sha256:a794a105a89b2762a022a660b01b2acced7f0f37ed6b7c991e7eba6a48925b18
     init: true
     restart: unless-stopped
     environment:
